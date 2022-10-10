@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 public class FileServer {
 
@@ -14,12 +15,25 @@ public class FileServer {
     private String defaultLocation;
 
     public FileServer(int port, String location){
-        this.defaultLocation = location;
+        this.defaultLocation = getDefaultLocation();
         try {
             this.serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getDefaultLocation(){
+        File temp = new File("fiel.txt");
+        System.out.println( temp.getAbsoluteFile().getParent());
+        Path location = temp.getAbsoluteFile().toPath();
+        Path tempLocation = location.resolveSibling("pliki_server");
+        if (tempLocation.toFile().mkdir()){
+            System.out.println("Stworzyłem wybrany katalog");
+        }else{
+            System.out.println("Katloj już istnieje");
+        }
+        return tempLocation.toString();
     }
 
     public void clientConnection(){

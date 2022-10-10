@@ -1,5 +1,8 @@
 package up;
 
+import java.io.File;
+import java.nio.file.Path;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -9,9 +12,10 @@ public class Main {
 //        c.connect();
 //        c.sendMessage();
 //        c.disconnect();
-        FileClient fc = new FileClient("localhost", 5501, "pliki\\");
-        fc.connect();
-        fc.sendFileToServer();
-        fc.disconnect();
+//        FileClient fc = new FileClient("localhost", 5501, "pliki\\");
+//        fc.connect();
+//        fc.sendFileToServer();
+//        fc.disconnect();
+
     }
 }

@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 public class FileClient {
 
@@ -17,11 +18,20 @@ public class FileClient {
     public FileClient(String h, int p, String l){
         this.host = h;
         this.port = p;
-        this.defaultLocation = l;
+        this.defaultLocation = getDefaultLocation();
     }
 
     private String getDefaultLocation(){
-        return "";
+        File temp = new File("fiel.txt");
+        System.out.println( temp.getAbsoluteFile().getParent());
+        Path location = temp.getAbsoluteFile().toPath();
+        Path tempLocation = location.resolveSibling("pliki");
+        if (tempLocation.toFile().mkdir()){
+            System.out.println("Stworzyłem wybrany katalog");
+        }else{
+            System.out.println("Katloj już istnieje");
+        }
+        return tempLocation.toString();
     }
 
     public void connect(){
