@@ -1,26 +1,33 @@
 package up;
 
+import up.testThread.StartTikTak;
 import up.testThread.TestThread;
+import up.testThread.TikTak;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static int[] tabInt;
+    public static List<Integer> numberList;
 
     public static void main(String[] args) {
 	// write your code here
+
+        numberList = new ArrayList<>();
 
         tabInt = new int[200];
         for (int i = 0;i<200;i++){
             tabInt[i] = -1;
          }
 
-        Client c = new Client("localhost", 5501);
-        c.connect();
-        c.sendMessage();
-        c.disconnect();
+//        Client c = new Client("localhost", 5501);
+//        c.connect();
+//        c.sendMessage();
+//        c.disconnect();
         //
 //        FileClient fc = new FileClient("localhost", 5501, "pliki\\");
 //        fc.connect();
@@ -53,8 +60,14 @@ public class Main {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-//        TestThread test = new TestThread(10);
+//        TestThread test = new TestThread(5);
+        TikTak tikTak = new TikTak();
+
+        StartTikTak t1 = new StartTikTak("Tik", tikTak);
+        StartTikTak t2 = new StartTikTak("Tak", tikTak);
+        StartTikTak t3 = new StartTikTak("Zak", tikTak);
 //        test.startRunnable();
-//        System.out.println("Zakńczenie głównego wątka");
+//        test.startCallable();
+        System.out.println("Zakńczenie głównego wątka");
     }
 }

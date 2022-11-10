@@ -1,8 +1,10 @@
 package up.testThread;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import up.Main;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
 
 public class TestThread {
 
@@ -27,4 +29,41 @@ public class TestThread {
         }
         service.shutdown();
     }
+
+    public void startCallable(){
+
+        ExecutorService service = Executors.newFixedThreadPool(numberThread);
+//        List<Future<String>> futureList = new ArrayList<>();
+        BlockingDeque<Future<String>> futuresDeque = new LinkedBlockingDeque<>();
+        System.out.println("Dowawanie zadań od listy");
+        for (int i = 0; i < Main.tabInt.length; i++){
+            TestCallable tc = new TestCallable(i);
+            futuresDeque.add(service.submit(tc));
+//            futureList.add(service.submit(tc));
+        }
+        System.out.println("odbieranie rezultatów");
+        Future<String> f;
+        while(!futuresDeque.isEmpty()){
+            f = futuresDeque.poll();
+            try {
+                String text = f.get();
+                System.out.println(text);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+//        for(int n = 0; n < futureList.size(); n++){
+//            Future<String> f = futureList.get(n);
+//            try {
+//                String text = f.get(2, TimeUnit.SECONDS);
+//                System.out.println(text);
+//            } catch (InterruptedException | TimeoutException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        service.shutdown();
+
+    }
+
+
 }
