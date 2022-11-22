@@ -52,13 +52,17 @@ public class Main {
 //        test.startRunnable();
 //        test.startCallable();
         DBConnection conn = new DBConnection();
-        Connection c = conn.connectToSQLite();
+//        Connection c = conn.connectToSQLite();
         try {
-            conn.createTable();
-            DBOperation operatio = new DBOperation(c);
-            operatio.insertPerson("Patryk", "Mazurek", 33);
-            conn.disconnect();
+            Connection c = conn.connectToMySql();
 
+//            conn.createTable();
+            DBOperation operatio = new DBOperation(c);
+//            operatio.insertPersonProc("Jan", "Nowak", 26);
+            operatio.getCountPersonProc();
+            operatio.getAllPersonProc();
+//            operatio.insertPerson("Patryk", "Mazurek", 33);
+            conn.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }

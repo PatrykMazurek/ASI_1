@@ -25,13 +25,14 @@ public class DBConnection {
         return null;
     }
 
-    public void connectToMySql() throws SQLException {
-        System.setProperty("jdbcDriver", "com.mysql.jdbc.Driver");
+    public Connection connectToMySql() throws SQLException {
+//        System.setProperty("jdbc.driver", "com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(
-                "jdbc:mysql://locoalhost:port",
-                "student",
-                "password");
+                "jdbc:mysql://localhost:3306/test",
+                "root",
+                "usbw");
         System.out.println("Nawiązanno połączenie");
+        return conn;
     }
 
     public void createTable() throws SQLException {
