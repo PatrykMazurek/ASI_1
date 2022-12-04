@@ -2,6 +2,7 @@ package up;
 
 import up.DB.DBConnection;
 import up.DB.DBOperation;
+import up.server.UDPClient;
 import up.testThread.StartTikTak;
 import up.testThread.TestThread;
 import up.testThread.TikTak;
@@ -51,21 +52,38 @@ public class Main {
 //        StartTikTak t3 = new StartTikTak("Zak", tikTak);
 //        test.startRunnable();
 //        test.startCallable();
-        DBConnection conn = new DBConnection();
-//        Connection c = conn.connectToSQLite();
-        try {
-            Connection c = conn.connectToMySql();
+//        DBConnection conn = new DBConnection();
+////        Connection c = conn.connectToSQLite();
+//        try {
+//            Connection c = conn.connectToMySql();
+//
+////            conn.createTable();
+//            DBOperation operatio = new DBOperation(c);
+////            operatio.insertPersonProc("Jan", "Nowak", 26);
+//            operatio.getCountPersonProc();
+//            operatio.getAllPersonProc();
+////            operatio.insertPerson("Patryk", "Mazurek", 33);
+//            conn.disconnect();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        UDPClient udpClient = new UDPClient();
+//        for (int i = 0; i<15; i++){
+//            udpClient.sendMessage(i+"");
+//        }
+//        udpClient.sendMessage("end");
+//        udpClient.close();
 
-//            conn.createTable();
-            DBOperation operatio = new DBOperation(c);
-//            operatio.insertPersonProc("Jan", "Nowak", 26);
-            operatio.getCountPersonProc();
-            operatio.getAllPersonProc();
-//            operatio.insertPerson("Patryk", "Mazurek", 33);
-            conn.disconnect();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        BoardGame bg = new BoardGame();
+        List<BoardGame> boardGameList = bg.initListGame();
+
+//        Stream<BoardGame> stream = boardGameList.stream();
+//        Map<Integer, List<BoardGame>> tempList = boardGameList.stream()
+//                .filter(g -> g.name.contains("g"))
+//                .filter(g -> g.minPlayers > 1)
+//                .filter(g -> g.price < 50)
+//                .collect(Collectors.groupingBy(BoardGame::getYear));
+
         System.out.println("Zakńczenie głównego wątka");
     }
 }
