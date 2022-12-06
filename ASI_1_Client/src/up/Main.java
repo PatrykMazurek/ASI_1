@@ -2,6 +2,7 @@ package up;
 
 import up.DB.DBConnection;
 import up.DB.DBOperation;
+import up.server.SicretInfo;
 import up.server.UDPClient;
 import up.testThread.StartTikTak;
 import up.testThread.TestThread;
@@ -12,7 +13,13 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -77,12 +84,38 @@ public class Main {
         BoardGame bg = new BoardGame();
         List<BoardGame> boardGameList = bg.initListGame();
 
-//        Stream<BoardGame> stream = boardGameList.stream();
-//        Map<Integer, List<BoardGame>> tempList = boardGameList.stream()
-//                .filter(g -> g.name.contains("g"))
-//                .filter(g -> g.minPlayers > 1)
-//                .filter(g -> g.price < 50)
-//                .collect(Collectors.groupingBy(BoardGame::getYear));
+        Supplier<Stream<BoardGame>> stream = () -> boardGameList.stream();
+        Map<Integer, List<BoardGame>> tempList = boardGameList.stream()
+                .filter(g -> g.name.contains("g"))
+                .filter(g -> g.minPlayers > 1)
+                .filter(g -> g.price < 50)
+                .collect(Collectors.groupingBy(BoardGame::getYear));
+
+        BoardGame game = boardGameList.stream()
+                .filter(g -> g.price > 80)
+                .findFirst()
+                .orElse(null);
+
+        if (game != null){
+            System.out.println(game.name);
+        }
+
+        boardGameList.stream()
+                .filter(g->g.price>100)
+                .sorted(Comparator.comparing(BoardGame::getYear))
+                .forEach(System.out::println);
+
+        int warunek = 2010;
+
+        Predicate<BoardGame> find = g -> g.year == warunek;
+
+        SicretInfo si = new SicretInfo();
+        byte[] tempMessage = si.encryptMessage("Dowolna wiadomość");
+        System.out.println("Szyfrowanie wiadomości");
+        String msg = new String(tempMessage);
+        System.out.println("Wiadomosć " + msg);
+        String deMessage = si.decryptMessage(tempMessage);
+        System.out.println("Wiadomosć po odszyfrowaniu " + deMessage);
 
         System.out.println("Zakńczenie głównego wątka");
     }
